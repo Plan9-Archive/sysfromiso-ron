@@ -324,8 +324,6 @@ void		splx(int);
 void		splxpc(int);
 char*		srvname(Chan*);
 int		swapcount(ulong);
-void		syscallfmt(int, ulong, va_list list);
-void		sysretfmt(int, va_list, long, uvlong, uvlong);
 int		swapfull(void);
 void		swapinit(void);
 void		timeradd(Timer*);

@@ -5,10 +5,11 @@ $	pnp
 A	audio
 A	uda1341
 B	bridge
+C	ce
 D	ssl
 E	sdp
 F	flash
-F	tinyfs
+G	gs1
 I	ip
 K	kprof
 L	lpt
@@ -16,6 +17,8 @@ M	mnt
 P	arch
 S	sd
 T	lm78
+U	usb
+V	lml
 V	tv
 X	loopback
 Y	pccard
@@ -32,22 +35,22 @@ l	ether
 m	mouse
 m	penmouse
 p	proc
+q	qmux
 r	rtc
 r	µc
 s	srv
 t	uart
-u	usb
 v	vga
 w	wd
 y	i82365
 y	pcmcia
-z	mntstats
 |	pipe
 ¤	cap
 æ	aoe
 Ι	kbin
-Λ	lml
 κ	kbmap
+μ	moipv6
+霞	kasumi
 
 α	local use
 β	local use
