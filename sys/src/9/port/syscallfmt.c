@@ -1,3 +1,6 @@
+/*
+ * Print functions for system call tracing.
+ */
 #include "u.h"
 #include "../port/lib.h"
 #include "mem.h"
@@ -5,9 +8,8 @@
 #include "fns.h"
 
 #include "/sys/src/libc/9syscall/sys.h"
-/*
- * Print functions for system call tracing.
- */
+
+// WE ARE OVERRUNNING SOMEHOW
 static void
 fmtrwdata(Fmt* f, char* a, int n, char* suffix)
 {
@@ -20,12 +22,11 @@ fmtrwdata(Fmt* f, char* a, int n, char* suffix)
 	}
 	validaddr((ulong)a, n, 0);
 	t = smalloc(n+1);
-	for(i = 0; i < n; i++){
-		if(a[i] > 0x20 && a[i] < 0x7f)
+	for(i = 0; i < n; i++)
+		if(a[i] > 0x20 && a[i] < 0x7f)	/* printable ascii? */
 			t[i] = a[i];
 		else
 			t[i] = '.';
-	}
 
 	fmtprint(f, " %#p/\"%s\"%s", a, t, suffix);
 	free(t);
@@ -50,8 +51,6 @@ fmtuserstring(Fmt* f, char* a, char* suffix)
 	free(t);
 }
 
-/*
- */
 void
 syscallfmt(int syscallno, ulong pc, va_list list)
 {
@@ -69,7 +68,8 @@ syscallfmt(int syscallno, ulong pc, va_list list)
 	if(syscallno > nsyscall)
 		fmtprint(&fmt, " %d ", syscallno);
 	else
-		fmtprint(&fmt, "%s ", sysctab[syscallno]?sysctab[syscallno]:"huh?");
+		fmtprint(&fmt, "%s ", sysctab[syscallno]?
+			sysctab[syscallno]: "huh?");
 
 	fmtprint(&fmt, "%ulx ", pc);
 	if(up->syscalltrace != nil)

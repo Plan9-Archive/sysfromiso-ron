@@ -123,7 +123,7 @@ notify(Ureg* ureg)
 		l = strlen(n->msg);
 		if(l > ERRMAX-23)	/* " pc=0x0123456789abcdef\0" */
 			l = ERRMAX-23;
-		snprint(n->msg + l, sizeof n->msg - l, " pc=%#ux", ureg->pc);
+		snprint(n->msg + l, sizeof n->msg - l, " pc=%#lux", ureg->pc);
 	}
 
 	if(n->flag != NUser && (up->notified || up->notify == 0)){
@@ -189,7 +189,7 @@ syscall(Ureg* ureg)
 	vlong startns, stopns;
 
 	if(!userureg(ureg))
-		panic("syscall: from kernel: pc %#ux r14 %#ux psr %#ux",
+		panic("syscall: from kernel: pc %#lux r14 %#lux psr %#lux",
 			ureg->pc, ureg->r14, ureg->psr);
 
 	cycles(&up->kentry);
@@ -208,7 +208,7 @@ syscall(Ureg* ureg)
 
 	if(up->procctl == Proc_tracesyscall){
 		/*
-		 * Redundant validaddr. Do we care?
+		 * Redundant validaddr.  Do we care?
 		 * Tracing syscalls is not exactly a fast path...
 		 * Beware, validaddr currently does a pexit rather
 		 * than an error if there's a problem; that might
@@ -230,7 +230,7 @@ syscall(Ureg* ureg)
 	startns = todget(nil);
 	if(!waserror()){
 		if(scallnr >= nsyscall){
-			pprint("bad sys call number %d pc %#ux\n",
+			pprint("bad sys call number %d pc %#lux\n",
 				scallnr, ureg->pc);
 			postnote(up, 1, "sys: bad sys call", NDebug);
 			error(Ebadarg);
